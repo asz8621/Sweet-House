@@ -1,0 +1,121 @@
+  .timeline{
+    position: relative;
+  }
+  .timeline::after{
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, #867162 8%, #867162 92%, rgba(80,80,80,0) 100%);
+    top: 0;
+    left: 44px;
+  }
+  .timeline-content{
+    margin-left: 60px;
+    .timeline-title{
+      position: relative;
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.15);
+      background: #fc8a3a;
+      color: #fff;
+      &::before{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -50.5px;
+        transform: translate(50%, -50%);
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        border: 4px solid #fc8a3a;
+        z-index: 5;
+      }
+      &::after{
+        content: "";
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        height: 0;
+        width: 0;
+        margin-top: -8px;
+        border: solid transparent;
+        border-color: transparent #fc8a3a transparent transparent;
+        border-width: 8px;
+        pointer-events: none;
+      }
+    }
+  }
+  .idea{
+    background-image: url(~@/assets/images/about-bg.jpg);
+    background-color: rgba(255, 255, 255, 0.8);
+    // 混合背景
+    background-blend-mode: screen;
+  }
+  
+@media (min-width: 320px) {
+  .timeline-content{
+    .timeline-title{
+      width: 170px;
+    }
+  }
+}
+@media (min-width: 768px) {
+  /* 768 以上 */
+  .idea{
+    background-color: #fff;
+  }
+  .idea-img{
+    background-image: url(~@/assets/images/about-bg.jpg);
+    height: 100%;
+    width: 100%;
+  }
+  .timeline::after{
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .timeline-content{
+    margin: 0;
+    // 偶數
+    .timeline-item:nth-child(even){
+      width: 299px;
+      margin-left: auto;
+    }
+    //奇數
+    .timeline-item:nth-child(odd){
+      width: 299px;
+      .timeline-title{
+        margin-left: auto;
+        &::before{
+          left: auto;
+          right: -30.5px;
+        }
+        &::after{
+          left: 100%;
+          border-color: transparent transparent transparent #fc8a3a;
+        }
+      }
+      .timeline-text{
+        text-align: right;
+      }
+    }
+  }
+}
+@media (min-width: 992px) {
+  .timeline-content .timeline-item:nth-child(odd) {
+    width: 417.5px;
+  }
+  .timeline-content .timeline-item:nth-child(even) {
+    width: 419.5px;
+  }
+}
+@media (min-width: 1200px) {
+  .timeline-content .timeline-item:nth-child(odd) {
+    width: 47.2%;
+  }
+  .timeline-content .timeline-item:nth-child(even) {
+    width: 47.2%;
+  }
+}

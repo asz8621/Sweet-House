@@ -1,0 +1,60 @@
+/* 輪播 */
+.bg-img {
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.img1 {
+  height: 400px;
+  background-image: url(~@/assets/images/Cake.jpg);
+}
+.img2 {
+  height: 400px;
+  background-image: url(~@/assets/images/CupCake.jpg);
+}
+.img3 {
+  height: 400px;
+  background-image: url(~@/assets/images/Macaron.jpg);
+}
+/* 輪播 */
+/* 訂閱 */
+.subscription {
+  background-image: url(~@/assets/images/Subscription.jpg);
+  height: 500px;
+  background-attachment: fixed;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.subscription-1 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.75);
+}
+.subscription-text {
+  color: #4c4e56;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.subscription-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+/* 訂閱 */
+@media (min-width: 768px) {
+  /* 768 以上 */
+  .img1,
+  .img2,
+  .img3 {
+    height: 800px;
+  }
+}

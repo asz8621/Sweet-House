@@ -1,0 +1,71 @@
+// 大範圍 CSS
+body {
+  font-weight: 600;
+  color: $main;
+}
+a:hover {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+// 在chrome下：
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+-webkit-appearance: none !important;
+margin: 0;
+}
+
+// Firefox下：
+input[type="number"]{-moz-appearance:textfield;}
+
+// 共用
+.content {// 內容區塊扣除 Navbar 高度
+  padding-top: 116px;
+}
+.bg-cover{
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.headline{
+  position: relative;
+  .headline-link{
+    position: absolute;
+    top: 20px;
+    right: 0;
+  }
+  &::after {
+    content: "";
+    border-top: 4px solid #f7c099;
+    width: 100px;
+    display: block;
+    position: relative;
+    top: -10px;
+    left: 0;
+  }
+}
+.spinner-border{
+  display: inherit;
+  // vertical-align: inherit;
+}
+.large-size{
+  font-weight: 900;
+}
+.router-link-exact-active.router-link-active{
+  color: #5a4c42 !important;
+}
+@media (min-width: 768px) {
+  /* 768 以上 */
+  .content {
+    padding-top: 180px;
+  }
+}
+@media (min-width: 375px) {
+  /* 768 以上 */
+  .large-size{
+    font-size: 1.25rem;
+  }
+}
