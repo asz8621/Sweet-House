@@ -86,6 +86,12 @@
                     <label class="form-check-label" for="enabled">是否啟用</label>
                   </div>
                 </div>
+                <div class="form-group">
+                  <div class="form-check">
+                    <input id="isHot" v-model="tempProduct.options.isHot" class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="isHot">是否熱銷</label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -112,7 +118,9 @@ export default {
     return {
       tempProduct: {
         imageUrl: [],
-        options: {},
+        options: {
+          isHot: false,
+        },
       },
       status: {
         fileUploading: false,
@@ -131,7 +139,9 @@ export default {
         case 'new':
           this.tempProduct = {
             imageUrl: [],
-            options: {},
+            options: {
+              isHot: false,
+            },
           };
           this.isLoading = false;
           break;
@@ -140,7 +150,6 @@ export default {
             this.isLoading = false;
             // 取得成功後回寫到 tempProduct
             this.tempProduct = res.data.data;
-            console.log(this.tempProduct.imageUrl.length);
             // 確保資料已經回寫後在打開 Modal
             $('#productModal').modal('show');
           }).catch((error) => {
@@ -155,6 +164,7 @@ export default {
       // 新增商品
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product`;
       let httpMethod = 'post';
+
       // 當不是新增商品時則切換成編輯商品 API
       if (!this.isNew) {
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`;

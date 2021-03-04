@@ -2,87 +2,39 @@
     <section class="p-4">
       <div class="container">
         <div class="headline py-4">
-          <h2>熱銷商品</h2>
-          <a href="#" class="btn btn-outline-main headline-link">更多</a>
+          <h2>{{cardTitle}}</h2>
+          <a href="#" class="btn btn-outline-main headline-link" @click="$router.push('products')">更多</a>
           <hr class="headline-bottom">
         </div>
-        <!-- <div class="hh">
-          <h3>熱銷商品</h3>
-          <a href="#" class="btn btn-outline-main">更多</a>
-        </div> -->
-        <!-- <hr /> -->
       </div>
+
       <div class="container">
-        <div class="div">
-          <swiper class="swiper" :options="swiperOption">
-            <swiper-slide>
-              <div class="card">
-                <img
-                  src="../assets/images/cake/1/cake1.jpg"
-                  alt=""
-                  class="img-fluid mb-3 card-img"
-                />
-                <h4 class="card-title">title1</h4>
-                <div class="price">
-                  <span>$ 1,940</span>
-                  <span>$ 980</span>
+        <div class="swiper-card">
+          <swiper class="swiper" :options="swiperOption" v-if="cardData.length">
+            <swiper-slide v-for="item in cardData" :key="`${item.id}${cardClassName}`">
+              <div class="swiper-card-body">
+                <div class="card-img" @click="$router.push(`/product/${item.id}`)">
+                    <img :src="item.imageUrl[0]" alt="" class="img-fluid" />
                 </div>
-                <button class="btn btn-main btn-card">加入購物車</button>
-                <!-- <button class="btn btn-main btn-card" disabled>已售完</button> -->
+                <h4 class="swiper-card-title">{{item.title}}</h4>
+                <div class="swiper-card-price">
+                  <span class="narrow">NT$</span>{{item.price}}
+                </div>
+
+                <button type="button" class="large-size btn btn-main w-100 d-flex justify-content-center align-items-center"
+                @click.prevent="addCart(item.id)" :disabled="status.btnLoading !== '' ">
+                  <span>加入購物車</span>
+                  <div class="spinner-border spinner-border-sm ml-2" role="status"
+                  v-if="status.btnLoading === item.id">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </button>
               </div>
             </swiper-slide>
-            <swiper-slide>
-              <div class="card">
-                <img
-                  src="../assets/images/cake/1/cake1.jpg"
-                  alt=""
-                  class="img-fluid mb-3 card-img"
-                />
-                <h4 class="card-title">title1</h4>
-                <div class="price">
-                  <span>$ 1,940</span>
-                  <span>$ 980</span>
-                </div>
-                <button class="btn btn-main btn-card">加入購物車</button>
-                <!-- <button class="btn btn-main btn-card" disabled>已售完</button> -->
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div class="card">
-                <img
-                  src="../assets/images/cake/1/cake1.jpg"
-                  alt=""
-                  class="img-fluid mb-3 card-img"
-                />
-                <h4 class="card-title">title1</h4>
-                <div class="price">
-                  <span>$ 1,940</span>
-                  <span>$ 980</span>
-                </div>
-                <button class="btn btn-main btn-card">加入購物車</button>
-                <!-- <button class="btn btn-main btn-card" disabled>已售完</button> -->
-              </div>
-            </swiper-slide>
-            <swiper-slide>
-              <div class="card">
-                <img
-                  src="../assets/images/cake/1/cake1.jpg"
-                  alt=""
-                  class="img-fluid mb-3 card-img"
-                />
-                <h4 class="card-title">title1</h4>
-                <div class="price">
-                  <span>$ 1,940</span>
-                  <span>$ 980</span>
-                </div>
-                <button class="btn btn-main btn-card">加入購物車</button>
-                <!-- <button class="btn btn-main btn-card" disabled>已售完</button> -->
-              </div>
-            </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-pagination" slot="pagination" :class="`${cardClassName}-pagination`"></div>
+            <div class="swiper-button-prev" slot="button-prev" :class="`${cardClassName}-prev`"></div>
+            <div class="swiper-button-next" slot="button-next" :class="`${cardClassName}-next`"></div>
           </swiper>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
         </div>
       </div>
     </section>
@@ -90,12 +42,12 @@
 
 <script>
 export default {
-  name: 'card',
-  props: {
-    msg: String,
-  },
+  props: ['cardClassName', 'cardData', 'cardTitle', 'carts'],
   data() {
     return {
+      status: {
+        btnLoading: '',
+      },
       swiperOption: {
         slidesPerView: 1,
         // spaceBetween: 10,
@@ -103,6 +55,10 @@ export default {
         loop: true,
         loopFillGroupWithBlank: true,
         breakpoints: {
+          991: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
           768: {
             slidesPerView: 3,
             slidesPerGroup: 3,
@@ -113,69 +69,85 @@ export default {
           },
         },
         pagination: {
-          el: '.swiper-pagination',
+          el: `.${this.cardClassName}-pagination`,
           clickable: true,
         },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: `.${this.cardClassName}-next`,
+          prevEl: `.${this.cardClassName}-prev`,
         },
       },
     };
   },
+  methods: {
+    addCart(id, quantity = 1) { // 加入購物車
+      this.status.btnLoading = id;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+
+      let httpMethod = 'post';
+      let qty = quantity; // 數量
+      let statusBtn = 'add'; // 預設 add
+      // 如果購物車有一樣的產品做更新
+      const mapData = this.carts.filter((item) => id === item.product.id);
+      if (mapData.length > 0) {
+        httpMethod = 'patch';
+        qty += mapData[0].quantity;
+        statusBtn = 'edit';
+      }
+      const cart = {
+        product: id,
+        quantity: qty,
+      };
+      this.$http[httpMethod](api, cart).then(() => {
+        this.$bus.$emit('getcart', statusBtn);
+        this.status.btnLoading = '';
+      }).catch((errors) => {
+        this.$toast.error(`${errors.response.data.errors}`, { icon: 'fas fa-times' });
+        this.status.btnLoading = '';
+      });
+    },
+  },
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .div{
+    .swiper-card{
       position: relative;
-    }
-    .qs {
-      position: relative;
-      padding: 2rem;
-    }
-    .hh {
-      display: flex;
-      justify-content: space-between;
-    }
-    .hh h3 {
-      font-weight: bold;
-    }
-    .hh + hr::after {
-      content: "";
-      border-top: 4px solid #f7c099;
-      width: 100px;
-      display: block;
-      position: relative;
-      top: -2.5px;
-      left: 0;
-    }
-    .card {
-      padding: 0.75rem;
-      margin-bottom: 1.25rem;
-      border: none;
-    }
-    .card img {
-      transition: 0.5s;
-    }
-    .card:hover img {
-      transform:scale(1.05);
-    }
-    .card-img {
-      border-radius: 5px;
-    }
-    .price {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
-    }
-    .btn-card {
-      width: 80%;
-      margin: auto;
-    }
-    .btn-card:disabled {
-      cursor: not-allowed;
+      .swiper-card-body {
+        padding: 0.75rem;
+        margin-bottom: 1.25rem;
+        border: none;
+        .card-img {
+          overflow: hidden;
+          cursor: pointer;
+          img{
+            border-radius: 5px;
+            transition: 0.75s;
+          }
+        }
+        &:hover {
+          .card-img {
+            img{
+              transform:scale(1.05);
+            }
+          }
+        }
+      }
+      .swiper-card-title{
+        margin: 0.25rem 0;
+      }
+      .swiper-card-price {
+        margin-bottom: 0.25rem;
+        text-align: right;
+        font-size: 1.5rem;
+        color: red;
+        .narrow{
+          font-size: 0.75rem;
+          margin-right: 5px;
+        }
+      }
     }
     .swiper-button-prev,.swiper-button-next{
       display: none;
@@ -202,6 +174,16 @@ export default {
       font-size: 2rem;
       color: #867162;
       z-index: 100;
+    }
+    @media (min-width: 414px) {
+      .swiper-card{
+        .swiper-card-title{
+          margin: 0.75rem 0;
+        }
+        .swiper-card-price {
+          margin-bottom: 0.75rem;
+        }
+      }
     }
     @media (min-width: 768px) {
       /* 768 以上 */

@@ -62,7 +62,7 @@
       </table>
             <Toasts></Toasts>
 
-      <!-- <Pagination :pages="pagination" @previous="getProducts"></Pagination> -->
+      <Pagination :pages="pagination" @previous="getProducts"></Pagination>
       <!-- Modal -->
       <ProductModal ref="productModal" :isNew="isNew" @update="getProducts"></ProductModal>
       <DelProductModal :tempProduct="tempProduct" @update="getProducts"></DelProductModal>
@@ -73,14 +73,14 @@ import $ from 'jquery';
 import ProductModal from '../../components/modal/ProductModal.vue';
 import DelProductModal from '../../components/modal/DelProductModal.vue';
 import Toasts from '../../components/Toasts.vue';
-// import Pagination from '../../components/Pagination.vue';
+import Pagination from '../../components/Pagination.vue';
 
 export default {
   components: {
     ProductModal,
     DelProductModal,
     Toasts,
-    // Pagination,
+    Pagination,
   },
   data() {
     return {
@@ -88,7 +88,9 @@ export default {
       pagination: {},
       tempProduct: {
         imageUrl: [],
-        options: {},
+        options: {
+          isHot: false,
+        },
       },
       isNew: false,
       status: {
@@ -109,7 +111,8 @@ export default {
           this.products = res.data.data; // 取得產品列表
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           this.isLoading = false;
-          console.log(res.data.data);
+          // this.products.options.isHot = false;
+          console.log('pppsss', this.products);
         })
         .catch(() => {
           this.$swal({
@@ -133,6 +136,19 @@ export default {
           this.isLoading = false;
           // 切換狀態為 false 代表編輯
           this.isNew = false;
+          // this.products[1].options = { isHot: false };
+          // this.products[2].options = { isHot: false };
+          // this.products[3].options = { isHot: false };
+          // this.products[4].options = { isHot: false };
+          // this.products[5].options = { isHot: false };
+          // this.products[6].options = { isHot: false };
+          // this.products[7].options = { isHot: false };
+          // this.products[8].options = { isHot: false };
+          // this.products[9].options = { isHot: false };
+          // this.products[10].options = { isHot: false };
+          // this.products[11].options = { isHot: false };
+          // console.log('ppp', this.products[1].options.isHot);
+          console.log('ppp', this.products);
           this.$refs.productModal.getProduct(item.id, isNew);
           break;
         case 'delete':
