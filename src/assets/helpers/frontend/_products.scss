@@ -32,7 +32,7 @@
     cursor: pointer;
     img{
       transform: scale(1);
-      transition: .75s;
+      transition: 1s;
     }
   }
   &:hover{
@@ -61,6 +61,13 @@
     }
   }
 }
+.single-features-btn{
+  .addcart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 @media (min-width: 375px) {
   .classification {
     .classification-link {
@@ -83,7 +90,37 @@
   }
 }
 @media (min-width: 991px) {
-  .addcart-text{
-    display: none;
+  .product-item{
+    .large-size{
+      padding: 0.5rem;
+      border-radius: 0;
+      font-size: 1.5rem;
+    }
+    position: relative;
+    &:hover{
+      .single-features-btn{
+        right: 0;
+      }
+    }
+  }
+  .single-features-btn{
+    position: absolute;
+    // 210.5px - images height
+    // 1rem - .addcart padding 上下各0.5rem
+    // 27px - icon 25px + border 上下各 1px
+    top: calc(210.5px - 1rem - 27px);
+    right: -100%;
+    transition: .3s;
+    .addcart-text{
+      display: none;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .single-features-btn{
+    // 255.5px - images height
+    // 1rem - .addcart padding 上下各0.5rem
+    // 27px - icon 25px + border 上下各 1px
+    top: calc(255.5px - 1rem - 27px);
   }
 }
