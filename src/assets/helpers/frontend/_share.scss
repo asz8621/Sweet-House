@@ -57,15 +57,18 @@ input[type="number"]{-moz-appearance:textfield;}
 .router-link-exact-active.router-link-active{
   color: #5a4c42 !important;
 }
-@media (min-width: 768px) {
-  /* 768 以上 */
-  .content {
-    padding-top: 180px;
-  }
-}
 @media (min-width: 375px) {
-  /* 768 以上 */
   .large-size{
     font-size: 1.25rem;
+  }
+  .headline{
+    .headline-link{
+      top: 10px;
+    }
+  }
+}
+@media (min-width: 768px) {
+  .content {
+    padding-top: 180px;
   }
 }

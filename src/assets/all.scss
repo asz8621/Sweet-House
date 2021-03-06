@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
-
 @import '~bootstrap/scss/functions';
 @import './helpers/_variables';
 @import '~bootstrap/scss/bootstrap';
+
+// frontend
 @import './helpers/frontend/_navbar';
 @import './helpers/frontend/_index';
+@import './helpers/frontend/_indexCard';
 @import './helpers/frontend/_share';
 @import './helpers/frontend/_about';
 @import './helpers/frontend/_contact';
+@import './helpers/frontend/_product';
 @import './helpers/frontend/_products';
+@import './helpers/frontend/_checkout';
 @import './helpers/frontend/_footer';
+
+// backend 個別寫入對應的 vue 裡
+
+// Modal
 @import './helpers/frontend/_cartModal';
