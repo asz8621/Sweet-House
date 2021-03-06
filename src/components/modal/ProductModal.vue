@@ -202,14 +202,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  .del-btn{
-    align-self: flex-end;;
-    text-align: center;
-    button{
-      border: none;
-      background: transparent;
-      font-size: 1.75rem;
-      color: #e6a97e;
-    }
-  }
 </style>
