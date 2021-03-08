@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mb-5">
       <VueLoading loading :active.sync="isLoading"></VueLoading>
       <div class="text-right mt-5">
         <button class="btn btn-main" @click="openModal('new')">
@@ -60,9 +60,7 @@
           </tr>
         </tbody>
       </table>
-            <Toasts></Toasts>
-
-      <!-- <Pagination :pages="pagination" @previous="getProducts"></Pagination> -->
+      <Pagination :pages="pagination" @previous="getProducts"></Pagination>
       <!-- Modal -->
       <ProductModal ref="productModal" :isNew="isNew" @update="getProducts"></ProductModal>
       <DelProductModal :tempProduct="tempProduct" @update="getProducts"></DelProductModal>
@@ -72,15 +70,13 @@
 import $ from 'jquery';
 import ProductModal from '../../components/modal/ProductModal.vue';
 import DelProductModal from '../../components/modal/DelProductModal.vue';
-import Toasts from '../../components/Toasts.vue';
-// import Pagination from '../../components/Pagination.vue';
+import Pagination from '../../components/Pagination.vue';
 
 export default {
   components: {
     ProductModal,
     DelProductModal,
-    Toasts,
-    // Pagination,
+    Pagination,
   },
   data() {
     return {

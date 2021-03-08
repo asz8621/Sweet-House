@@ -60,7 +60,7 @@
     }
   }
 }
-
+// 購物 & 加入購物車 btn
 .features-btn-group{
   position: fixed;
   bottom: 0;
@@ -79,37 +79,40 @@
 }
 
 // tab 分頁按鈕
-  .product-tab-content{
-      display: none;
-    .delivery-title{
-      font-size: 1.25rem;
-    }
-    &.active{
-      display: block;
-    }
-  }
-// tab 分頁內容
 .product-tab-menu{
   display: flex;
-  justify-content: space-between;
   .product-tab-item{
     width: calc(100% / 3);
     text-align: center;
-    border-bottom: 3px solid #867162;
-    &.active{
-      border-radius: 5px 5px 0 0;
-      background: #867162;
-      .product-tab-link{
-        color: #fff;
-      }
+    border-top: 1px solid rgba(134,113,98,0.5);
+    border-right: 1px solid rgba(134,113,98,0.5);
+    border-bottom: 1px solid rgba(134,113,98,0.5);
+    &:first-child{
+      border-left: 1px solid rgba(134,113,98,0.5);
     }
     .product-tab-link{
+      color: rgba(134,113,98,0.75);
       cursor: pointer;
       display: block;
-      color: #867162;
+      transition: 0.5s;
+    }
+    &.active{
+      border-top: 4px solid rgba(134,113,98,1);
+      border-left: 1px solid rgba(134,113,98,1);
+      border-right: 1px solid rgba(134,113,98,1);
+      border-bottom:none;
+      .product-tab-link{
+        color: #543a27;
+      }
     }
   }
 }
+// tab 分頁內容
+  .product-tab-content{
+    .delivery-title{
+      font-size: 1.25rem;
+    }
+  }
 
 @media (min-width: 576px) {
   .product{
@@ -134,9 +137,6 @@
           outline: 0;
         }
       }
-    }
-    .num{
-      display: flex;
     }
     .features-btn-group{
       position: static;

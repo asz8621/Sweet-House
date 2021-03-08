@@ -84,7 +84,7 @@
             <div class="d-flex justify-content-center align-items-center h-100">目前購物車沒有任何商品</div>
           </div>
           <div class="modal-footer w-100 bg-white">
-            <button type="button" class="large-size btn btn-main w-100" :disabled="errorQty" @click="checkout">立即結帳</button>
+            <button type="button" class="large-size btn btn-main w-100" disabled="disabled">立即結帳</button>
           </div>
         </div>
       </div>
