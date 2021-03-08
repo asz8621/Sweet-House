@@ -43,7 +43,7 @@ export default {
         // console.log(res);
         const { token, expired } = res.data;
         document.cookie = `SHtoken=${token}; expires=${new Date(expired * 1000)}; path=/`;
-        this.$router.push('/admin');
+        this.$router.push('/admin/index');
       }).catch((err) => {
         console.log('錯誤', err);
         alert('請確認帳號密碼');

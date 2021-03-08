@@ -22,9 +22,9 @@
         </ul>
       </div>
     </nav>
-    <div class="content">
+    <!-- <div class="content"> -->
       <router-view :token="token" v-if="checkSuccess"></router-view>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 <script>

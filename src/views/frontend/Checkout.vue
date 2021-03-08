@@ -358,7 +358,7 @@
                   <label for="order-remarks">訂單備註</label>
                   <textarea id="order-remarks" class="form-control" rows="3"
                   placeholder="有任何訂單需求都可在此留言，我們會盡量滿足您的要求"
-                  v-model="form.remarks"></textarea>
+                  v-model="form.message"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -463,7 +463,8 @@ export default {
         tel: '',
         email: '',
         address: '',
-        remarks: '',
+        message: '',
+        coupon: '',
         payment: '',
         payments: {
           paymentMethod: '貨到付款', // 預設付款方式
@@ -616,6 +617,7 @@ export default {
       this.$http.post(api, { code: this.form.coupons.discountKey }).then((res) => {
         this.form.coupons.tenpCoupon = res.data.data;
         this.form.coupons.click = false;
+        this.form.coupon = this.form.coupons.discountKey;
         // 折價卷時間戳
         const couponsTimestamp = this.form.coupons.tenpCoupon.deadline.timestamp;
         // 現在時間戳

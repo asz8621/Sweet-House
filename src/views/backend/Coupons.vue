@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mb-5">
       <VueLoading loading :active.sync="isLoading"></VueLoading>
       <div class="text-right mt-5">
         <button class="btn btn-main" @click="openModal('new')">
@@ -53,8 +53,6 @@
         </tbody>
       </table>
 
-      <Toasts></Toasts>
-
       <Pagination :pages="pagination" @previous="getCoupons"></Pagination>
       <!-- Modal -->
       <CouponsModal ref="couponsModal" :isNew="isNew" @update="getCoupons"></CouponsModal>
@@ -64,7 +62,6 @@
 <script>
 import $ from 'jquery';
 
-import Toasts from '../../components/Toasts.vue';
 import CouponsModal from '../../components/modal/CouponsModal.vue';
 import DelCouponsModal from '../../components/modal/DelCouponsModal.vue';
 import Pagination from '../../components/Pagination.vue';
@@ -73,7 +70,6 @@ export default {
   components: {
     CouponsModal,
     DelCouponsModal,
-    Toasts,
     Pagination,
   },
   data() {

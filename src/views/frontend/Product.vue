@@ -67,23 +67,34 @@
 
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <ul class="product-tab-menu mb-3" id="tab-menu">
-            <li class="product-tab-item active">
-              <a href="javascript:;" class="product-tab-link p-3" @click="changeTabs(0)">商品介紹</a>
+            <li class="product-tab-item"
+            :class="{'active':tab==='tab1'}"
+            @click="tab = 'tab1'">
+              <span class="product-tab-link p-3">商品介紹</span>
             </li>
-            <li class="product-tab-item">
-              <a href="javascript:;" class="product-tab-link p-3" @click="changeTabs(1)">規格說明</a>
+            <li class="product-tab-item"
+            :class="{'active':tab==='tab2'}"
+            @click="tab = 'tab2'">
+              <span class="product-tab-link p-3">規格說明</span>
             </li>
-            <li class="product-tab-item">
-              <a href="javascript:;" class="product-tab-link p-3" @click="changeTabs(2)">訂購需知</a>
+            <li class="product-tab-item"
+            :class="{'active':tab==='tab3'}"
+            @click="tab = 'tab3'">
+              <span class="product-tab-link p-3">訂購需知</span>
             </li>
           </ul>
           <ul class="product-tab-description" id="tab-content">
-            <li class="product-tab-content active" v-html="product.content"></li>
-            <li class="product-tab-content" v-html="product.description"></li>
-            <li class="product-tab-content">
+            <transition name="fade-tab" mode="out-in">
+              <li class="product-tab-content" v-html="product.content"
+              v-if="tab === 'tab1'" key="tab1"></li>
+              <li class="product-tab-content" v-html="product.description"
+              v-if="tab === 'tab2'" key="tab2"></li>
+              <li class="product-tab-content"
+              v-if="tab === 'tab3'" key="tab3">
               <div class="delivery p-3">
                 <div class="delivery-title text-danger pb-3">蛋糕相關商品下單前請您務必詳讀以下兩點：</div>
                 <ol class="mb-6">
@@ -104,6 +115,7 @@
                 </ol>
               </div>
             </li>
+            </transition>
           </ul>
         </div>
       </div>
@@ -133,7 +145,11 @@ export default {
         btnLoading: '',
         isBuy: false,
       },
+      tab: 'tab1', // tab 標籤預設
     };
+  },
+  created() {
+    this.status.isLoading = true;
   },
   mounted() {
     this.getProduct();
@@ -158,19 +174,6 @@ export default {
       if (this.quantity < 1 || !IntegerRule.test(this.quantity)) {
         this.quantity = 1;
       }
-    },
-    changeTabs(TabNum) { // 切換商品介紹選單按鈕
-      const searchItem = document.getElementById('tab-menu').getElementsByTagName('li');
-      for (let i = 0; i < searchItem.length; i += 1) {
-        searchItem[i].classList.remove('active');
-      }
-      searchItem[TabNum].classList.add('active');
-
-      const conts = document.getElementById('tab-content').getElementsByTagName('li');
-      for (let i = 0; i < conts.length; i += 1) {
-        conts[i].classList.remove('active');
-      }
-      conts[TabNum].classList.add('active');
     },
     addCart(id, quantity = 1, btn) { // 加入購物車 && 立即購買
       // PATCH api/{uuid}/ec/shopping
@@ -211,4 +214,11 @@ export default {
 };
 </script>
 <style lang="scss">
+.fade-tab-enter-active, .fade-tab-leave-active {
+  transition: opacity .25s;
+}
+.fade-tab-enter, .fade-tab-leave-to{
+  opacity: 0;
+}
+
 </style>
