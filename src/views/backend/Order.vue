@@ -30,24 +30,23 @@
           <td>{{ item.payment }}</td>
           <td>
             <ul>
-              <li v-for="(product, key) in item.products" :key="key">
-                {{ product.product.title }} X {{ product.quantity }}
+              <li class="cursor-pointer" @click="openModal(item,'show')">
+                {{ item.products[0].product.title }} X {{ item.products[0].quantity }}
+                <span class="badge badge-pill badge-info ml-1"
+                v-if="item.products.length !== 1">{{item.products.length}}</span>
               </li>
             </ul>
           </td>
           <td>
-            <span v-if="item.enabled" class="text-success">已付款</span>
+            <span v-if="item.paid" class="text-success">已付款</span>
             <span class="text-danger" v-else>未付款</span>
           </td>
           <td>NT$ {{ item.amount }}</td>
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-main btn-sm" @click="openModal(item)">
-                編輯
+                查看
               </button>
-              <!-- <button class="btn btn-outline-danger btn-sm" @click="openModal('delete', item)">
-                取消
-              </button> -->
             </div>
           </td>
         </tr>
@@ -56,7 +55,7 @@
     <Pagination :pages="pagination" @previous="getOrder"></Pagination>
 
     <!-- Modal -->
-    <OrderModal ref="orderModal"></OrderModal>
+    <OrderModal ref="orderModal" @update="getOrder"></OrderModal>
   </div>
 </template>
 <script>
@@ -68,7 +67,6 @@ import Pagination from '../../components/Pagination.vue';
 export default {
   components: {
     OrderModal,
-    // DelOrderModal,
     Pagination,
   },
   data() {
@@ -92,6 +90,21 @@ export default {
           this.oders = res.data.data;
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           this.isLoading = false;
+
+          this.oders.forEach((item, index) => {
+            switch (item.payment) {
+              case 'ATM':
+                this.oders[index].payment = '貨到付款';
+                break;
+              case 'WebATM':
+                this.oders[index].payment = '銀行轉帳';
+                break;
+              case 'Credit':
+                this.oders[index].payment = '信用卡';
+                break;
+              default:
+            }
+          });
         })
         .catch(() => {
           this.$swal({
@@ -101,9 +114,11 @@ export default {
           });
         });
     },
-    openModal(item) {
-      this.$refs.orderModal.getOrder(item.id);
+    openModal(item, show) {
+      this.$refs.orderModal.getOrder(item.id, show);
     },
   },
 };
 </script>
+<style lang="scss">
+</style>
