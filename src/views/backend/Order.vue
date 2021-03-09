@@ -41,7 +41,7 @@
             <span v-if="item.paid" class="text-success">已付款</span>
             <span class="text-danger" v-else>未付款</span>
           </td>
-          <td>NT$ {{ item.amount }}</td>
+          <td>NT$ {{ item.amount | thousands }}</td>
           <td>
             <div class="btn-group">
               <button class="btn btn-outline-main btn-sm" @click="openModal(item)">

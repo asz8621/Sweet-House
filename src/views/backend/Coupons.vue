@@ -33,7 +33,7 @@
           <tr v-for="(item, index) in coupons" :key="index">
             <td>{{ item.title }}</td>
             <td>{{ item.code }}</td>
-            <td>{{ item.percent }}</td>
+            <td>{{ item.percent | thousands }}</td>
             <td>{{ item.deadline.datetime }}</td>
             <td>
               <span v-if="item.enabled" class="text-success">啟用</span>
@@ -100,7 +100,6 @@ export default {
           this.coupons = res.data.data; // 取得產品列表
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           this.isLoading = false;
-          console.log(res.data.data);
         })
         .catch(() => {
           this.$swal({

@@ -12,7 +12,6 @@
       <div class="row py-5">
         <div class="col-md-6">
           <div class="form">
-            <!-- <ValidationProvider v-slot="{ invalid }"> -->
             <ValidationObserver v-slot="{ invalid }">
               <form>
                 <div class="form-group">

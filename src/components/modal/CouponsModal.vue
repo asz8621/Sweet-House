@@ -92,9 +92,12 @@ export default {
             [this.deadlineDate, this.deadlineTime] = deadline;
             // 確保資料已經回寫後在打開 Modal
             $('#couponModal').modal('show');
-          }).catch((error) => {
-            // 若出現錯誤則顯示錯誤訊息
-            console.log(error);
+          }).catch(() => {
+            this.$swal({
+              icon: 'error',
+              title: '讀取錯誤',
+              text: '資料讀取異常，請洽資訊人員',
+            });
             this.isLoading = false;
           });
           break;
@@ -115,10 +118,12 @@ export default {
         this.deadlineDate = '';
         this.deadlineTime = '';
         $('#couponModal').modal('hide'); // AJAX 新增成功後關閉 Modal
-      }).catch((error) => {
-        // 若出現錯誤則顯示錯誤訊息
-        // eslint-disable-next-line no-console
-        console.log(error);
+      }).catch(() => {
+        this.$swal({
+          icon: 'error',
+          title: '讀取錯誤',
+          text: '資料讀取異常，請洽資訊人員',
+        });
       });
     },
   },

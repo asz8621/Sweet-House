@@ -1,13 +1,8 @@
 <template>
   <div id="checkout" class="checkout content" :class="{'complete-all':form.complete}">
-    <!-- <template v-if="del">
-      <VueLoading loading :active.sync="status.isLoading"></VueLoading>
-    </template> -->
-    <!-- <template v-else> -->
       <VueLoading loading :active.sync="status.isLoading">
         <loading></loading>
       </VueLoading>
-    <!-- </template> -->
     <div class="checkout-content container py-5">
 
       <section class="process d-flex mb-6">
@@ -45,7 +40,6 @@
                 </span>
               </h5>
               <transition name="fade">
-                <!-- <div v-if="this.carts.length < 1"></div> -->
                 <template v-if="this.carts.length > 0">
                   <div v-if="rotate">
                     <div class="p-3 d-none d-lg-block">
@@ -70,7 +64,7 @@
                               <span class="d-lg-none">規格：</span>{{ item.product.unit }}
                             </div>
                             <div class="contents-text-price table-col-4 table-space">
-                              <span class="d-lg-none">單價：</span><span class="dollar">$</span>{{item.product.price}}
+                              <span class="d-lg-none">單價：</span><span class="dollar">$</span>{{item.product.price | thousands}}
                             </div>
                           </div>
                         </div>
@@ -112,7 +106,7 @@
                             </button>
                           </div>
                           <div class="price-total text-right table-col-6 table-space d-none d-lg-block">
-                            <span class="dollar">$</span>{{item.product.priceTotal}}
+                            <span class="dollar">$</span>{{item.product.priceTotal | thousands}}
                           </div>
                           <!-- del -->
                           <button type="button" data-btn="del"
@@ -130,7 +124,7 @@
                         </div>
                       </div>
                       <div class="price-total text-right d-block d-lg-none">
-                        <span>小計：</span><span class="dollar">$</span>{{item.product.priceTotal}}
+                        <span>小計：</span><span class="dollar">$</span>{{item.product.priceTotal | thousands}}
                       </div>
                     </div>
                   </div>
@@ -156,12 +150,10 @@
                       type="button" id="button-addon2"
                       @click="useCoupon" :disabled="form.coupons.success || form.coupons.click">
                         確定
-                        <!-- <div class="ml-2"> -->
                           <div class="spinner-border spinner-border-sm ml-2" role="status"
                           v-if="form.coupons.click">
                             <span class="sr-only">Loading...</span>
                           </div>
-                        <!-- </div> -->
                       </button>
                     </div>
                   </div>
@@ -171,7 +163,7 @@
                       已使用
                       <span class="text-danger">{{form.coupons.tenpCoupon.title}}</span>
                       折價卷，此次折扣
-                      <span class="text-danger">{{form.coupons.tenpCoupon.percent}}</span>
+                      <span class="text-danger">{{form.coupons.tenpCoupon.percent | thousands}}</span>
                       元
                     </span>
                     <button type="button" class="btn btn-sm btn-secondary" @click="cancelCoupon">取消</button>
@@ -340,6 +332,7 @@
                     v-model="form.payments.creditCard.cardThreeCodes">
                   </ValidationProvider>
                 </div>
+
                 <!-- 銀行轉帳 -->
                 <div class="transfer form-group" v-if="form.payments.transfer.status">
                   <h5>銀行轉帳付款指示</h5>
@@ -396,27 +389,6 @@
           </div>
         </transition>
       </section>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -509,7 +481,6 @@ export default {
       if (this.carts.length < 1) {
         this.processStart = false;
         this.$toast.error('購物清單沒有產品，請點 選購商品 選購商品');
-        // alert('nonono');
         return;
       }
       this.processStart = !this.processStart;
@@ -593,7 +564,6 @@ export default {
         // 若出現錯誤則顯示錯誤訊息
         this.$toast.error(`取得購物車資料異常${error}`, { icon: 'fas fa-times' });
       });
-      // this.carts.product.priceTotalqq = 0;
     },
     delProduct(e, id, data) { // 刪除購物車資料
       this.status.btnStatus = e.currentTarget.dataset.btn;
@@ -644,7 +614,6 @@ export default {
       this.discount = 0;
     },
     creditCardSwitch(payments) { // 付款方式
-      // console.log(paymentw);
       switch (payments) {
         case 'delivery':
           this.form.payments.delivery.status = true;

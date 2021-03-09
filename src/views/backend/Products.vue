@@ -37,12 +37,8 @@
             </td>
             <td>{{ item.category }}</td>
             <td>{{ item.title }}</td>
-            <td class="text-left">
-              <span v-html="item.origin_price"></span>
-            </td>
-            <td class="text-left">
-              <span v-html="item.price"></span>
-            </td>
+            <td class="text-right">NT$ {{ item.origin_price | thousands }}</td>
+            <td class="text-right">NT$ {{ item.price | thousands }}</td>
             <td>
               <span v-if="item.enabled" class="text-success">啟用</span>
               <span v-else>未啟用</span>
@@ -105,7 +101,6 @@ export default {
           this.products = res.data.data; // 取得產品列表
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           this.isLoading = false;
-          console.log(res.data.data);
         })
         .catch(() => {
           this.$swal({

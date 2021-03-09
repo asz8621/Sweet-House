@@ -22,9 +22,7 @@
         </ul>
       </div>
     </nav>
-    <!-- <div class="content"> -->
-      <router-view :token="token" v-if="checkSuccess"></router-view>
-    <!-- </div> -->
+    <router-view :token="token" v-if="checkSuccess"></router-view>
   </div>
 </template>
 <script>
@@ -47,8 +45,7 @@ export default {
         if (res.data.success) {
           this.checkSuccess = true;
         }
-      }).catch((error) => {
-        console.log(error);
+      }).catch(() => {
         // 沒有 token 轉跳首頁
         this.$router.push('/');
       });

@@ -47,15 +47,12 @@
     }
   }
   .price{
-    span{
-      display: none;
-    }
     .original{
       font-size: 0.75rem;
       color: gray;
       text-decoration:line-through;
     }
-    .no-onSale, .onSale{
+    .onSale{
       color: red;
     }
   }
@@ -79,13 +76,6 @@
     position: sticky;
     top: 150px!important;
     box-shadow: none;
-    .product-item {
-      .price {
-        span {
-          display: inline-block;
-        }
-      }
-    }
   }
 }
 @media (min-width: 991px) {

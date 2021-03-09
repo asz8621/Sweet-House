@@ -40,11 +40,6 @@ const routes = [
         name: '訂單確認',
         component: () => import('../views/frontend/Checkout.vue'),
       },
-      // {
-      //   path: 'Complete',
-      //   name: '結帳完成',
-      //   component: () => import('../views/frontend/Complete.vue'),
-      // },
     ],
   },
   {

@@ -16,11 +16,11 @@
             <div class="price">
               <div class="small-text mb-1">建議售價</div>
               <template v-if="product.price !== product.origin_price">
-                <span class="onSale mr-2">NT$ {{ product.price }}</span>
-                <span class="original">NT$ {{ product.origin_price }}</span>
+                <span class="onSale mr-2">NT$ {{ product.price | thousands}}</span>
+                <span class="original">NT$ {{ product.origin_price | thousands}}</span>
               </template>
               <template v-else>
-                <span class="onSale mr-2">NT$ {{ product.price }}</span>
+                <span class="onSale mr-2">NT$ {{ product.price | thousands}}</span>
               </template>
             </div>
 

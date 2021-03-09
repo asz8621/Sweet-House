@@ -18,7 +18,7 @@
                 </div>
                 <h4 class="swiper-card-title">{{item.title}}</h4>
                 <div class="swiper-card-price">
-                  <span class="narrow">NT$</span>{{item.price}}
+                  <span class="narrow">NT$</span>{{item.price | thousands}}
                 </div>
 
                 <button type="button" class="large-size btn btn-main w-100 d-flex justify-content-center align-items-center"

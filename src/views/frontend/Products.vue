@@ -28,13 +28,13 @@
 
               <!-- 有特價 -->
               <div class="price mb-3 text-right" v-if="item.origin_price !== item.price">
-                <div class="original mb-1">NT$ {{item.origin_price}}</div>
-                <div class="onSale mb-3">NT$ {{item.price}}</div>
+                <div class="original mb-1">NT$ {{item.origin_price | thousands}}</div>
+                <div class="onSale mb-3">NT$ {{item.price | thousands}}</div>
               </div>
 
               <!-- 沒有特價 -->
               <div class="price mb-3 text-right" v-else>
-                <div class="onSale mb-1"><span>售價</span>NT$ {{item.origin_price}}</div>
+                <div class="onSale mb-1">NT$ {{item.origin_price | thousands}}</div>
               </div>
 
             </div>
@@ -116,17 +116,6 @@ export default {
         if (item.category === type) {
           this.typeProduct.push(item);
         }
-      });
-    },
-    del() { // 刪除購物車
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/all/product`;
-      this.$http.delete(api).then((res) => {
-        // this.tempProduct = res.data.data;
-        console.log('del', res);
-      }).catch((error) => {
-        // 若出現錯誤則顯示錯誤訊息
-        console.log(error);
-        this.status.isLoading = false;
       });
     },
     addCart(id, quantity = 1) { // 加入購物車

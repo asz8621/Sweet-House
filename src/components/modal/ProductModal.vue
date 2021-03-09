@@ -70,14 +70,10 @@
                 <hr>
                 <div class="form-group">
                   <label for="description">產品規格</label>
-                  <!-- <textarea id="description" v-model="tempProduct.description" type="text" class="form-control"
-                    placeholder="請輸入產品說明" required></textarea> -->
                     <ckeditor id="description" v-model="tempProduct.description" :config="editorConfig"></ckeditor>
                 </div>
                 <div class="form-group">
                   <label for="content">產品描述</label>
-                  <!-- <textarea id="content" v-model="tempProduct.content" type="text" class="form-control"
-                    placeholder="請輸入產品描述" required></textarea> -->
                     <ckeditor id="content" v-model="tempProduct.content" :config="editorConfig"></ckeditor>
                 </div>
                 <div class="form-group">
@@ -140,12 +136,14 @@ export default {
             this.isLoading = false;
             // 取得成功後回寫到 tempProduct
             this.tempProduct = res.data.data;
-            console.log(this.tempProduct.imageUrl.length);
             // 確保資料已經回寫後在打開 Modal
             $('#productModal').modal('show');
-          }).catch((error) => {
-            // 若出現錯誤則顯示錯誤訊息
-            console.log(error);
+          }).catch(() => {
+            this.$swal({
+              icon: 'error',
+              title: '讀取錯誤',
+              text: '資料讀取異常，請洽資訊人員',
+            });
             this.isLoading = false;
           });
           break;
@@ -163,10 +161,12 @@ export default {
       this.$http[httpMethod](api, this.tempProduct).then(() => {
         this.$emit('update');
         $('#productModal').modal('hide'); // AJAX 新增成功後關閉 Modal
-      }).catch((error) => {
-        // 若出現錯誤則顯示錯誤訊息
-        // eslint-disable-next-line no-console
-        console.log(error);
+      }).catch(() => {
+        this.$swal({
+          icon: 'error',
+          title: '讀取錯誤',
+          text: '資料讀取異常，請洽資訊人員',
+        });
       });
     },
     uploadFile() {
@@ -189,10 +189,12 @@ export default {
             this.tempProduct.imageUrl.splice(0, 1, response.data.data.path);
           }
         }
-      }).catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log('上傳不可超過 2 MB');
-        console.log(error);
+      }).catch(() => {
+        this.$swal({
+          icon: 'error',
+          title: '格式錯誤',
+          text: '上傳不可超過 2 MB',
+        });
         this.status.fileUploading = false;
       });
     },

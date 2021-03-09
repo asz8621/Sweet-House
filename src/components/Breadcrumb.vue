@@ -1,7 +1,6 @@
 <template>
   <div :class="{ 'breadcrumb-top': paddingTop }">
     <nav aria-label="breadcrumb">
-      <!-- <ol class="breadcrumb px-0 m-0 bg-white"> -->
       <ol class="breadcrumb px-0 bg-white">
         <li class="breadcrumb-item">
           <router-link to="/"><i class="fas fa-home text-main"></i></router-link>

@@ -40,7 +40,6 @@ export default {
     signin() {
       const api = `${process.env.VUE_APP_APIPATH}/api/auth/login`;
       this.$http.post(api, this.user).then((res) => {
-        // console.log(res);
         const { token, expired } = res.data;
         document.cookie = `SHtoken=${token}; expires=${new Date(expired * 1000)}; path=/`;
         this.$router.push('/admin/index');
@@ -60,7 +59,6 @@ body {
 }
 
 body {
-  display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
   align-items: center;
