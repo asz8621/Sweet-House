@@ -13,7 +13,7 @@
           <swiper class="swiper" :options="swiperOption" v-if="cardData.length">
             <swiper-slide v-for="item in cardData" :key="`${item.id}${cardClassName}`">
               <div class="swiper-card-body">
-                <div class="card-img" @click="$router.push(`/product/${item.id}`)">
+                <div class="card-img cursor-pointer" @click="$router.push(`/product/${item.id}`)">
                     <img :src="item.imageUrl[0]" alt="" class="img-fluid" />
                 </div>
                 <h4 class="swiper-card-title">{{item.title}}</h4>

@@ -18,7 +18,7 @@
         v-for="item in typeProduct" :key="item.id">
         <div class="product-item">
           <div class="product-content">
-            <div class="product-content-img">
+            <div class="product-content-img cursor-pointer">
               <router-link :to="`/product/${item.id}`">
                 <img :src="item.imageUrl" alt="" class="img-fluid">
               </router-link>

@@ -37,7 +37,7 @@
           <div class="order-list" v-if="!processStart" key="cutover1">
             <!-- 1-購物清單 -->
             <div class="order-product mb-4">
-              <h5 class="order-title p-3 m-0" @click.prevent="rotate = !rotate">
+              <h5 class="order-title cursor-pointer p-3 m-0" @click.prevent="rotate = !rotate">
                 購物清單
                 <span class="order-title-num">{{this.carts.length}}</span>
                 <span class="order-collapse" :class="{'rotate':rotate}"  v-if="this.carts.length > 0">
@@ -256,26 +256,26 @@
 
                 <label for="address">付款方式</label>
                 <div class="form-group">
-                  <div class="custom-control custom-radio custom-control-inline">
+                  <div class="custom-control custom-radio custom-control-inline cursor-pointer">
                     <input type="radio" id="customRadioInline1"
-                    class="custom-control-input" name="customRadioInline1"
+                    class="custom-control-input cursor-pointer" name="customRadioInline1"
                     value="ATM" v-model="form.payments.paymentMethod"
                     @click="creditCardSwitch('delivery')" checked>
-                    <label class="custom-control-label" for="customRadioInline1" selected>貨到付款</label>
+                    <label class="custom-control-label cursor-pointer" for="customRadioInline1" selected>貨到付款</label>
                   </div>
-                  <div class="custom-control custom-radio custom-control-inline">
+                  <div class="custom-control custom-radio custom-control-inline cursor-pointer">
                     <input type="radio" id="customRadioInline2"
-                    class="custom-control-input" name="customRadioInline1"
+                    class="custom-control-input cursor-pointer" name="customRadioInline1"
                     value="Credit" @click="creditCardSwitch('creditCard')"
                     v-model="form.payments.paymentMethod">
-                    <label class="custom-control-label" for="customRadioInline2">信用卡結帳</label>
+                    <label class="custom-control-label cursor-pointer" for="customRadioInline2">信用卡結帳</label>
                   </div>
-                  <div class="custom-control custom-radio custom-control-inline">
+                  <div class="custom-control custom-radio custom-control-inline cursor-pointer">
                     <input type="radio" id="customRadioInline3"
-                    class="custom-control-input" name="customRadioInline1"
+                    class="custom-control-input cursor-pointer" name="customRadioInline1"
                     value="WebATM" @click="creditCardSwitch('transfer')"
                     v-model="form.payments.paymentMethod">
-                    <label class="custom-control-label" for="customRadioInline3">銀行轉帳</label>
+                    <label class="custom-control-label cursor-pointer" for="customRadioInline3">銀行轉帳</label>
                   </div>
                 </div>
 

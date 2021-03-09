@@ -3,7 +3,7 @@
     <VueWindowResize v-show="true" v-model="window"/>
     <header class="header">
       <nav class="nav-top">
-        <div class="menu-icon" @click="mobileMenu" :class="{ 'opened': menu.openMobileMenu }">
+        <div class="menu-icon cursor-pointer" @click="mobileMenu" :class="{ 'opened': menu.openMobileMenu }">
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
@@ -19,7 +19,7 @@
             @click.prevent="isSearch">
               <i class="fas fa-search"></i>
             </a>
-            <div id="search" class="search" :class="{ 'opened': search }">
+            <div id="search" class="search cursor-pointer" :class="{ 'opened': search }">
               <input
                 type="text"
                 class="search-text"

@@ -74,17 +74,17 @@
             <li class="product-tab-item"
             :class="{'active':tab==='tab1'}"
             @click="tab = 'tab1'">
-              <span class="product-tab-link p-3">商品介紹</span>
+              <span class="product-tab-link cursor-pointer p-3">商品介紹</span>
             </li>
             <li class="product-tab-item"
             :class="{'active':tab==='tab2'}"
             @click="tab = 'tab2'">
-              <span class="product-tab-link p-3">規格說明</span>
+              <span class="product-tab-link cursor-pointer p-3">規格說明</span>
             </li>
             <li class="product-tab-item"
             :class="{'active':tab==='tab3'}"
             @click="tab = 'tab3'">
-              <span class="product-tab-link p-3">訂購需知</span>
+              <span class="product-tab-link cursor-pointer p-3">訂購需知</span>
             </li>
           </ul>
           <ul class="product-tab-description" id="tab-content">

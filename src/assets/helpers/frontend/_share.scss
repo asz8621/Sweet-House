@@ -57,6 +57,9 @@ input[type="number"]{-moz-appearance:textfield;}
 .router-link-exact-active.router-link-active{
   color: #5a4c42 !important;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 @media (min-width: 375px) {
   .large-size{
     font-size: 1.25rem;
