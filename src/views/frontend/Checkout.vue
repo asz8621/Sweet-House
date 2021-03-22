@@ -1,8 +1,5 @@
 <template>
   <div id="checkout" class="checkout content" :class="{'complete-all':form.complete}">
-      <VueLoading loading :active.sync="status.isLoading">
-        <loading></loading>
-      </VueLoading>
     <div class="checkout-content container py-5">
 
       <section class="process d-flex mb-6">
@@ -358,7 +355,7 @@
                   <ValidationProvider tag="div" class="form-check" :rules="{ required: { allowFalse: false } }" v-slot="{ errors }">
                     <input class="form-check-input" type="checkbox" id="gridCheck" v-model="form.provisions">
                     <label class="form-check-label" for="gridCheck">
-                      已閱讀相關購物需知<a href="javastript:;" data-toggle="modal" data-target="#exampleModal">相關條文</a>
+                      已閱讀相關購物需知<a href="javastript:;" data-toggle="modal" data-target="#provisions">相關條文</a>
                     </label>
                     <span class="invalid-feedback">{{errors[0]}}</span>
                   </ValidationProvider>
@@ -391,27 +388,69 @@
       </section>
     </div>
 
+    <!-- modal -->
+    <div class="provisions modal fade" id="provisions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="provisions-header modal-header w-100 bg-white">
+            <div class="large-size text-center">購物需知相關條文</div>
+            <div class="header-small">本站目前不開放，此購物功能為測試版，您可以填寫假資料，後續開放會寄送開放連結到你填寫的 E-mail ，請您敬請期待。</div>
+            <button type="button" class="provisions-close close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              親愛的顧客，您好：<br>
+              首先要請您先閱讀以下有關本站的購物須知，希望您可以詳細讀再下單，減少雙方購物上的糾紛與提升美好的購物體驗。<br>
+              您完成購物流程，即表示您已閱讀、了解且同意接受本網站使用條款之全部內容與約定，如不同意本網站使用條款之全部或部分者，請勿填寫基本資料及完成後續購物之流程。<br>
+            </p>
+            <ul>
+              <li>
+                <div>【購物方式】</div>
+                <ul>
+                  <li class="pl-4">購物流程：選購商品 → 選擇送貨及付款方式 → 前往結帳 → 填寫資料與付款 → 訂購完成。</li>
+                </ul>
+              </li>
+              <li>
+                <div>【交易安全】</div>
+                <ul>
+                  <li class="pl-4">弄甜屋承諾基於您同意所登記、授與弄甜屋的個人資料，均受到隱密且安全的保護。</li>
+                </ul>
+              </li>
+              <li>
+                <div>【訂單相關】</div>
+                <ol>
+                  <li>本店保留訂單接受與否之權利，若因意外等狀況導致無法接受您的訂單，將使用電話、E-MAIL或站內訂單留言與您聯繫，可更換訂單內容或辦理退款，造成您的不便，敬請見諒。</li>
+                  <li>完成訂購前請再三確認訂單內容，商品品項／訂購數量／付款方式／配送地址等相關資訊是否正確、符合您的需求，正確無誤後方可完成訂購程序。</li>
+                  <li>訂購多樣商品，請於同一購物車結帳，若分開結帳將產生二筆以上之訂單及運費，恕系統無法合併付款與合併訂單出貨，請務必留意。</li>
+                </ol>
+              </li>
+              <li>
+                <div>【出貨作業】</div>
+                <ol>
+                  <li>出貨時間為一般平日週一至週五，例假日與國定假日無法進行出貨作業，請您特別留意。</li>
+                  <li>訂單完成付款後三個工作天(不含例假日)將依序為您出貨，如遇商品缺貨煩請等待七至二十一個工作天，我們將盡速為您完成訂單出貨。</li>
+                  <li>配送收件地址資訊不完整導致無法順利收貨、遇颱風地震等天災影響或系統設備維修、倉儲盤點調整等情況，出貨時間將所發生情事順延，不便之處敬請見諒。</li>
+                  <li>訂單送出後，若有修改收件資料或是指定到貨時段的需求，請於上班時間直接與我們聯絡 07-5168168 ，我們將盡速為您處理。</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script>
-// import $ from 'jquery';
-
-import loading from '../../components/Loading.vue';
-
 export default {
-  components: {
-    loading,
-  },
-  props: {
-    window: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
   data() {
     return {
       status: {
-        isLoading: false, // 整個畫面 Loading
         btnLoading: '', // 綁定 id 判斷數量更新
         isdel: false, // 點擊刪除移除 Loading 效果
         btnStatus: '', // data-btn 暫存值
@@ -470,7 +509,6 @@ export default {
     },
   },
   created() {
-    this.status.isLoading = true;
     this.getCart();
   },
   mounted() {
@@ -547,11 +585,11 @@ export default {
     },
     getCart() { // 抓購物車資料
       if (!this.status.isdel) {
-        this.status.isLoading = true;
+        this.$store.dispatch('updateLoading', true);
       }
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
       this.$http.get(api).then((res) => {
-        this.status.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
         this.status.isdel = false;
         this.carts = res.data.data;
         this.priceTotal = 0;
@@ -711,4 +749,16 @@ export default {
 };
 </script>
 <style lang="scss">
+.provisions-close{
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+.provisions-header{
+  flex-direction: column;
+}
+.header-small{
+  font-size: 0.75rem;
+  color: red;
+}
 </style>

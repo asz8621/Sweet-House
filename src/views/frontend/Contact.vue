@@ -1,8 +1,5 @@
 <template>
   <div class="content">
-    <VueLoading loading :active.sync="isLoading">
-      <loading></loading>
-    </VueLoading>
     <div class="container pt-5 pb-5">
       <Breadcrumb></Breadcrumb>
       <div class="headline py-4">
@@ -66,17 +63,14 @@
   </div>
 </template>
 <script>
-import loading from '../../components/Loading.vue';
 import Breadcrumb from '../../components/Breadcrumb.vue';
 
 export default {
   components: {
-    loading,
     Breadcrumb,
   },
   data() {
     return {
-      isLoading: false,
       form: {
         name: '',
         phone: '',
@@ -84,12 +78,6 @@ export default {
         message: '',
       },
     };
-  },
-  created() {
-    this.isLoading = true;
-  },
-  mounted() {
-    this.isLoading = false;
   },
 };
 </script>

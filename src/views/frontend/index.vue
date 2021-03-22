@@ -1,8 +1,5 @@
 <template>
   <div class="about">
-    <VueLoading loading :active.sync="isLoading">
-      <loading></loading>
-    </VueLoading>
     <section class="content mb-6">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -51,18 +48,15 @@
   </div>
 </template>
 <script>
-import loading from '../../components/Loading.vue';
 import card from '../../components/IndexCard.vue';
 
 export default {
   props: ['carts'],
   components: {
-    loading,
     card,
   },
   data() {
     return {
-      isLoading: false,
       tempProduct: {},
       hotProduct: {},
       latestProducts: {},
@@ -76,14 +70,14 @@ export default {
   },
   methods: {
     getProduct() { // 讀取所有商品資料
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
       this.$http.get(api)
         .then((res) => {
           this.tempProduct = res.data.data;
           this.latestProducts = this.tempProduct.slice(0, 5);
           this.hotProduct = this.tempProduct.filter((item) => item.options.isHot);
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
           this.$toast.error('資料讀取異常，請洽客服人員', { icon: 'fas fa-times' });

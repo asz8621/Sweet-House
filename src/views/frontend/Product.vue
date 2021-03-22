@@ -1,8 +1,5 @@
 <template>
   <div class="content">
-    <VueLoading loading :active.sync="status.isLoading">
-      <loading></loading>
-    </VueLoading>
     <div class="container py-5">
       <Breadcrumb :productTitle="product.title"></Breadcrumb>
       <div class="row pb-md-5">
@@ -15,13 +12,8 @@
             <!-- 建議售價 -->
             <div class="price">
               <div class="small-text mb-1">建議售價</div>
-              <template v-if="product.price !== product.origin_price">
-                <span class="onSale mr-2">NT$ {{ product.price | thousands}}</span>
-                <span class="original">NT$ {{ product.origin_price | thousands}}</span>
-              </template>
-              <template v-else>
-                <span class="onSale mr-2">NT$ {{ product.price | thousands}}</span>
-              </template>
+                <span class="onSale mr-2">NT$ {{product.price | thousands}}</span>
+                <span class="original" v-if="product.price !== product.origin_price">NT$ {{product.origin_price | thousands}}</span>
             </div>
 
             <!-- 商品規格 -->
@@ -36,9 +28,17 @@
             <div class="qty">
               <div class="small-text mb-1">數量</div>
                 <div class="qty-counter d-flex">
-                  <button type="button" class="btn btn-compute less" @click="quantity--" :disabled="quantity === 1"><i class="fas fa-minus"></i></button>
-                  <input type="number" class="text-center qty-num" min="1" max="99" value="1" v-model.number="quantity" @change="verifyQuantity">
-                  <button type="button" class="btn btn-compute plus" @click="quantity++"><i class="fas fa-plus"></i></button>
+                  <button type="button" class="btn btn-compute less" @click="quantity--"
+                  :disabled="quantity <= 1 || status.btnLoading !== ''">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <input type="number" class="text-center qty-num" min="1" max="99" value="1"
+                  v-model.number="quantity" @change="verifyQuantity"
+                  :disabled="quantity < 1 || status.btnLoading !== ''">
+                  <button type="button" class="btn btn-compute plus" @click="quantity++"
+                  :disabled="quantity < 1 || status.btnLoading !== ''">
+                    <i class="fas fa-plus"></i>
+                  </button>
                 </div>
                 <div class="features-btn-group">
                   <button type="button"
@@ -123,12 +123,10 @@
   </div>
 </template>
 <script>
-import loading from '../../components/Loading.vue';
 import Breadcrumb from '../../components/Breadcrumb.vue';
 
 export default {
   components: {
-    loading,
     Breadcrumb,
   },
   props: ['carts'],
@@ -141,7 +139,6 @@ export default {
       },
       quantity: 1,
       status: {
-        isLoading: false,
         btnLoading: '',
         isBuy: false,
       },
@@ -149,23 +146,20 @@ export default {
     };
   },
   created() {
-    this.status.isLoading = true;
-  },
-  mounted() {
     this.getProduct();
   },
   methods: {
     getProduct() { // 讀取所有商品資料
-      this.status.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const { id } = this.$route.params;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`;
       this.$http.get(api)
         .then((res) => {
           this.product = res.data.data;
-          this.status.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.status.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
           this.$toast.error('資料讀取異常，請洽客服人員', { icon: 'fas fa-times' });
         });
     },

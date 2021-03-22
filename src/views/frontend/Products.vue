@@ -1,8 +1,5 @@
 <template>
   <div class="content">
-    <VueLoading loading :active.sync="status.isLoading">
-      <loading></loading>
-    </VueLoading>
     <div class="container pt-5 pb-5">
       <Breadcrumb :padding-top="paddingTop"></Breadcrumb>
       <ul class="classification d-flex p-4 px-md-0 py-md-5" :style="{ 'top' : classificationTop ? '115px' : '88px' }">
@@ -39,12 +36,12 @@
 
             </div>
           </div>
-          <div class="single-features-btn" :style="{'right': status.btnLoading === item.id ? '2px' : ''}">
-            <button type="button" class="addcart large-size btn btn-main w-100" @click.prevent="addCart(item.id)" :disabled="status.btnLoading !== '' ">
+          <div class="single-features-btn" :style="{'right': btnLoading === item.id ? '2px' : ''}">
+            <button type="button" class="addcart large-size btn btn-main w-100" @click.prevent="addCart(item.id)" :disabled="btnLoading !== '' ">
               <i class="fas fa-cart-plus d-none d-lg-block"></i>
               <span class="addcart-text">加入購物車</span>
               <div class="spinner-border spinner-border-sm ml-2" role="status"
-               v-if="status.btnLoading === item.id">
+               v-if="btnLoading === item.id">
                 <span class="sr-only">Loading...</span>
               </div>
             </button>
@@ -58,43 +55,41 @@
 <script>
 // import $ from 'jquery';
 
-import loading from '../../components/Loading.vue';
+import { mapGetters, mapActions } from 'vuex';
 import Breadcrumb from '../../components/Breadcrumb.vue';
-
+// Getters 及 mapGetters, mapActions
 export default {
   props: ['carts'],
   components: {
-    loading,
     Breadcrumb,
   },
   data() {
     return {
-      product: {},
-      tempProduct: {},
-      pagination: {},
-      classificationName: '',
-      typeProduct: [], // 產品切換
-      classification: [], // 大類別
+      // product: {},
+      // pagination: {},
+      // classificationName: '',
+      // typeProduct: [], // 產品切換
+      // classification: [], // 大類別
       classificationTop: true,
       quantity: 1,
       paddingTop: true, // 控制麵包屑
-      status: {
-        isLoading: false,
-        btnLoading: '',
-      },
+      btnLoading: '',
     };
   },
+  computed: {
+    ...mapGetters('productsModules', ['product', 'typeProduct', 'pagination', 'classification', 'classificationName']),
+  },
   created() {
-    this.status.isLoading = true;
+    this.getProducts();
   },
   mounted() {
-    this.getProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    ...mapActions('productsModules', ['filterProducts', 'getProducts']),
     handleScroll() { // 滾動偵測切換 classificationTop 位置
       this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
       if (this.scroll > 50) {
@@ -103,23 +98,8 @@ export default {
         this.classificationTop = true;
       }
     },
-    filterProducts(type) { // 產品切換
-      // 清空內容
-      this.typeProduct = [];
-      this.classificationName = type;
-      // 全部就拷貝
-      if (type === '全部產品') {
-        this.typeProduct = { ...this.product };
-      }
-      // 不是全部跑迴圈
-      this.product.forEach((item) => {
-        if (item.category === type) {
-          this.typeProduct.push(item);
-        }
-      });
-    },
     addCart(id, quantity = 1) { // 加入購物車
-      this.status.btnLoading = id;
+      this.btnLoading = id;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
 
       let httpMethod = 'post';
@@ -138,34 +118,11 @@ export default {
       };
       this.$http[httpMethod](api, cart).then(() => {
         this.$bus.$emit('getcart', statusBtn);
-        this.status.btnLoading = '';
+        this.btnLoading = '';
       }).catch((errors) => {
         this.$toast.error(`${errors.response.data.errors}`, { icon: 'fas fa-times' });
-        this.status.btnLoading = '';
+        this.btnLoading = '';
       });
-    },
-    getProducts() { // 讀取所有商品資料
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
-      this.$http.get(api)
-        .then((res) => {
-          // 取得產品列表
-          this.product = res.data.data;
-          this.typeProduct = res.data.data;
-          this.classificationName = '全部產品';
-          this.pagination = res.data.meta.pagination; // 取得分頁資訊
-
-          // 建立大類別
-          const classificationAll = this.product.map((item) => item.category);
-          classificationAll.splice(0, 0, '全部產品');
-          // 移除陣列重複的值
-          this.classification = classificationAll.filter((element, index, arr) => arr.indexOf(element) === index);
-
-          // 關閉 Loading
-          this.status.isLoading = false;
-        })
-        .catch(() => {
-          this.$toast.error('資料讀取異常，請洽客服人員', { icon: 'fas fa-times' });
-        });
     },
   },
 };

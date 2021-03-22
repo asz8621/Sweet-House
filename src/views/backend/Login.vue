@@ -1,28 +1,36 @@
 <template>
-  <div>
+  <div class="login">
+    <img class="mb-3" src="../../assets/images/logo.png" alt="" width="200">
     <form class="form-signin" @submit.prevent="signin">
-      <h1 class="h3 mb-4 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input
-        type="email"
-        id="inputEmail"
-        class="form-control"
-        placeholder="Email address"
-        v-model="user.email"
-        required
-        autofocus
-      />
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="inputPassword"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-6 mb-4 text-muted">&copy; 2017-2018</p>
+      <div class="signin-group">
+        <input
+          type="email"
+          id="inputEmail"
+          class="login-input form-control mb-4"
+          placeholder="Account"
+          v-model="user.email"
+          autocomplete="off"
+          required
+        />
+        <label for="inputEmail" class="signin-icon">
+          <i class="fas fa-user-alt"></i>
+        </label>
+      </div>
+      <div class="signin-group">
+        <input
+          type="password"
+          id="inputPassword"
+          class="login-input form-control mb-4"
+          placeholder="Password"
+          v-model="user.password"
+          required
+        />
+        <label for="inputPassword" class="signin-icon">
+          <i class="fas fa-key"></i>
+        </label>
+      </div>
+      <button type="submit" class="large-size btn btn-lg btn-main btn-block">登入</button>
+      <p class="text-muted mt-6 mb-4">&copy; 2021 弄甜屋 All Rights Reserved.</p>
     </form>
   </div>
 </template>
@@ -43,8 +51,7 @@ export default {
         const { token, expired } = res.data;
         document.cookie = `SHtoken=${token}; expires=${new Date(expired * 1000)}; path=/`;
         this.$router.push('/admin/index');
-      }).catch((err) => {
-        console.log('錯誤', err);
+      }).catch(() => {
         alert('請確認帳號密碼');
         this.user.password = '';
       });
@@ -53,47 +60,40 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-html,
-body {
-  height: 100%;
-}
-
-body {
+.login{
+  height: 100vh;
   display: flex;
-  -ms-flex-align: center;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
-
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-.form-signin .checkbox {
-  font-weight: 400;
-}
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type='email'] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type='password'] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+  }
+  .signin-group{
+    position: relative;
+    .signin-icon{
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      z-index: 1;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      margin: 0;
+      transition: .5s;
+    }
+    .login-input{
+      padding-left: 3rem;
+      transition: .5s;
+      &:focus{
+        padding-left: 0.75rem;
+        z-index: 2;
+      }
+      &:focus+label{
+        opacity: 0;
+      }
+    }
+  }
 }
 </style>

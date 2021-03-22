@@ -15,6 +15,7 @@ module.exports = {
     'vue',
   ],
   rules: {
-    "max-len":[1,200],
+    'no-param-reassign': 0,
+    'max-len': [1, 200],
   },
 };

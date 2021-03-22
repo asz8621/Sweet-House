@@ -125,7 +125,6 @@ export default {
         product: id,
         quantity,
       };
-
       // 各別按鈕 loading
       switch (dataset) {
         case 'less':
@@ -139,7 +138,6 @@ export default {
           break;
         default:
       }
-
       // 數量異常關閉結帳
       const IntegerRule = /^[1-9]+[0-9]*]*$/; // 驗證正整數
       if (!IntegerRule.test(cart.quantity)) {
@@ -149,7 +147,6 @@ export default {
         this.errorQty = true;
         return;
       }
-
       // 數量正常才更新
       this.$http.patch(api, cart).then(() => {
         this.btnLoading = '';
@@ -187,7 +184,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <VueLoading loading :active.sync="isLoading">
+      <loading></loading>
+    </VueLoading>
     <VueWindowResize v-show="true" v-model="window"/>
     <header class="header">
       <nav class="nav-top">
@@ -123,10 +126,12 @@
 
 <script>
 import $ from 'jquery';
+import loading from '../../components/Loading.vue';
 import CartModal from '../../components/modal/CartModal.vue';
 
 export default {
   components: {
+    loading,
     CartModal,
   },
   data() {
@@ -147,6 +152,11 @@ export default {
       carts: [],
       priceTotal: 0,
     };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
   },
   created() {
     this.$bus.$on('getcart', (status) => {

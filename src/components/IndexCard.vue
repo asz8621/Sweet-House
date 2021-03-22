@@ -83,7 +83,6 @@ export default {
     addCart(id, quantity = 1) { // 加入購物車
       this.status.btnLoading = id;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-
       let httpMethod = 'post';
       let qty = quantity; // 數量
       let statusBtn = 'add'; // 預設 add
@@ -108,7 +107,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
