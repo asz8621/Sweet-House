@@ -70,7 +70,7 @@
                 <hr>
                 <div class="form-group">
                   <label for="description">產品規格</label>
-                    <ckeditor id="description" v-model="tempProduct.description" :config="editorConfig"></ckeditor>
+                    <ckeditor id="description" name="one" v-model="tempProduct.description" :config="editorConfig"></ckeditor>
                 </div>
                 <div class="form-group">
                   <label for="content">產品描述</label>

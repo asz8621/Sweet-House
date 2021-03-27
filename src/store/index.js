@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   strict: true, // 嚴謹模式
   state: {
-    isLoading: true,
+    isLoading: false,
   },
   actions: { // 操作行為
     // context 固定

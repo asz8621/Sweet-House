@@ -1,3 +1,6 @@
+.product-details{
+  border:1px solid rgba(134, 113, 98, 0.5);
+}
 .product-title, .price, .format, .qty{
   margin-bottom: 1rem;
 }
@@ -87,8 +90,8 @@
     border-top: 1px solid rgba(134,113,98,0.5);
     border-right: 1px solid rgba(134,113,98,0.5);
     border-bottom: 1px solid rgba(134,113,98,0.5);
-    &:first-child{
-      border-left: 1px solid rgba(134,113,98,0.5);
+    &:last-child{
+      border-right: none;
     }
     .product-tab-link{
       color: rgba(134,113,98,0.75);
@@ -97,8 +100,8 @@
     }
     &.active{
       border-top: 4px solid rgba(134,113,98,1);
-      border-left: 1px solid rgba(134,113,98,1);
-      border-right: 1px solid rgba(134,113,98,1);
+      // border-left: 1px solid rgba(134,113,98,1);
+      // border-right: 1px solid rgba(134,113,98,1);
       border-bottom:none;
       .product-tab-link{
         color: #543a27;
@@ -107,12 +110,18 @@
   }
 }
 // tab 分頁內容
-  .product-tab-content{
-    .delivery-title{
-      font-size: 1.25rem;
-    }
+.product-tab-content{
+  .delivery-title{
+    font-size: 1.25rem;
   }
+}
 
+.fade-tab-enter-active, .fade-tab-leave-active {
+  transition: opacity .25s;
+}
+.fade-tab-enter, .fade-tab-leave-to{
+  opacity: 0;
+}
 @media (min-width: 576px) {
   .product{
     .qty-counter{

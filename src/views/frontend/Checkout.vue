@@ -13,13 +13,13 @@
           <div class="process-no p-4" :class="{'finish':processStart}">
             <span class="process-no-round">2</span>
           </div>
-          <div>填寫資料</div>
+          <div :class="{'text-undone': !processStart}">填寫資料</div>
         </div>
         <div class="process-block text-center">
           <div class="process-no p-4" :class="{'finish':processStart && form.complete}">
             <span class="process-no-round">3</span>
           </div>
-          <div>完成訂單</div>
+          <div :class="{'text-undone': !form.complete}">完成訂單</div>
         </div>
       </section>
 
@@ -131,7 +131,8 @@
             </div>
 
             <!-- 1-訂單資訊 -->
-            <div class="order-info mb-4">
+            <transition name="order-fade" mode="out-in">
+            <div class="order-info mb-4"  key="cutover10">
               <h5 class="order-title p-3 m-0">訂單資訊</h5>
               <div class="order-num text-right p-3 d-none d-sm-block"
               v-if="this.carts.length > 0">
@@ -191,9 +192,10 @@
 
               </div>
             </div>
+            </transition>
 
             <!-- 1-btn -->
-            <div class="cost-btn-group text-center p-3 p-sm-0 w-100" v-if="!processStart">
+            <div class="cost-btn-group text-center p-3 p-sm-0 w-100">
               <button type="button" class="cost-btn-back large-size btn btn-outline-main"
               @click="$router.push('products')">選購商品</button>
               <button type="button" class="cost-btn-confirm large-size btn btn-main"
@@ -518,7 +520,7 @@ export default {
     checkOrder() {
       if (this.carts.length < 1) {
         this.processStart = false;
-        this.$toast.error('購物清單沒有產品，請點 選購商品 選購商品');
+        this.$toast.error('購物清單沒有任何產品，請點 選購商品 加入購物車裡');
         return;
       }
       this.processStart = !this.processStart;
@@ -749,16 +751,4 @@ export default {
 };
 </script>
 <style lang="scss">
-.provisions-close{
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-}
-.provisions-header{
-  flex-direction: column;
-}
-.header-small{
-  font-size: 0.75rem;
-  color: red;
-}
 </style>

@@ -3,6 +3,8 @@
 @import './helpers/_variables';
 @import '~bootstrap/scss/bootstrap';
 
+@import './helpers/frontend/_loading';
+
 // frontend
 @import './helpers/frontend/_navbar';
 @import './helpers/frontend/_index';

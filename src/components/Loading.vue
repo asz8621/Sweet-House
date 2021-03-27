@@ -6,42 +6,4 @@
 </template>
 
 <style lang="scss">
-.loading-text{
-  font-family: 'Nosifer', cursive;
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 1.5rem;
-  color: #867162;
-  text-shadow: 3px 3px 4px #ffffff;
-}
-.loading-img{
-    width: 300px;
-    height: 300px;
-    background: url("../assets/images/logo.png");
-    background-size: 300px 300px;
-    animation-name: loadingImg;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-duration: 1s;
-}
-.vld-overlay{
-  .vld-background{
-    opacity: 1;
-    background: #ffddc5;
-  }
-}
-.vld-background{
-  opacity: 1;
-}
-@keyframes loadingImg {
-  0%{
-      transform: scale(1);
-  }
-  50%{
-      transform: scale(1.05);
-  }
-  100%{
-      transform: scale(1);
-  }
-}
 </style>

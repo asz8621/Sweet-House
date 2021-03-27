@@ -1,16 +1,15 @@
 <template>
-    <section class="p-4">
+    <section :class="cardClassName !== 'similar' ? 'p-4' : ''">
       <div class="container">
         <div class="headline py-4">
           <h2>{{cardTitle}}</h2>
-          <a href="#" class="large-size headline-link btn btn-outline-main" @click="$router.push('products')">更多商品</a>
+          <a href="#" class="large-size headline-link btn btn-outline-main" @click="$router.push('products')" v-if="cardClassName !== 'similar'">更多商品</a>
           <hr class="headline-bottom">
         </div>
       </div>
-
       <div class="container">
         <div class="swiper-card">
-          <swiper class="swiper" :options="swiperOption" v-if="cardData.length">
+          <swiper class="swiper" :options="cardClassName !== 'similar' ? indexSwiperOption : similarSwiperOption" v-if="cardData.length">
             <swiper-slide v-for="item in cardData" :key="`${item.id}${cardClassName}`">
               <div class="swiper-card-body">
                 <div class="card-img cursor-pointer" @click="$router.push(`/product/${item.id}`)">
@@ -31,10 +30,10 @@
                 </button>
               </div>
             </swiper-slide>
-            <div class="swiper-pagination" slot="pagination" :class="`${cardClassName}-pagination`"></div>
+            <div class="swiper-pagination" slot="pagination" :class="`${cardClassName}-pagination`" v-if="cardClassName !== 'similar'"></div>
           </swiper>
-            <div class="swiper-button-prev" slot="button-prev" :class="`${cardClassName}-prev`"></div>
-            <div class="swiper-button-next" slot="button-next" :class="`${cardClassName}-next`"></div>
+            <div class="swiper-button-prev" slot="button-prev" :class="`${cardClassName}-prev`" v-if="cardClassName !== 'similar'"></div>
+            <div class="swiper-button-next" slot="button-next" :class="`${cardClassName}-next`" v-if="cardClassName !== 'similar'"></div>
         </div>
       </div>
     </section>
@@ -48,7 +47,26 @@ export default {
       status: {
         btnLoading: '',
       },
-      swiperOption: {
+      similarSwiperOption: { // 產品頁
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        loopFillGroupWithBlank: true,
+        breakpoints: {
+          991: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+          },
+          768: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+          540: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+          },
+        },
+      },
+      indexSwiperOption: { // index
         slidesPerView: 1,
         // spaceBetween: 10,
         slidesPerGroup: 1,

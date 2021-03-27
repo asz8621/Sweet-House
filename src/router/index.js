@@ -12,32 +12,50 @@ const routes = [
       {
         path: '',
         name: 'index',
+        meta: {
+          title: '弄甜屋｜Sweet House',
+        },
         component: () => import('../views/frontend/index.vue'),
       },
       {
         path: 'about',
         name: '關於弄甜屋',
+        meta: {
+          title: '關於我們｜弄甜屋',
+        },
         component: () => import('../views/frontend/About.vue'),
       },
       {
         path: 'products',
         name: '全部產品',
+        meta: {
+          title: '所有產品｜弄甜屋',
+        },
         component: () => import('../views/frontend/Products.vue'),
       },
       {
         path: 'product/:id',
         name: 'Product',
+        meta: {
+          title: '產品｜弄甜屋',
+        },
         component: () => import('../views/frontend/Product.vue'),
         props: { default: true, sidebar: false },
       },
       {
         path: 'contact',
         name: '聯絡我們',
+        meta: {
+          title: '聯絡我們｜弄甜屋',
+        },
         component: () => import('../views/frontend/Contact.vue'),
       },
       {
         path: 'checkout',
         name: '訂單確認',
+        meta: {
+          title: '購物結帳｜弄甜屋',
+        },
         component: () => import('../views/frontend/Checkout.vue'),
       },
     ],
@@ -82,6 +100,13 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
 });
 
 export default router;

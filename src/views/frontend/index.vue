@@ -25,7 +25,7 @@
         </a>
       </div>
     </section>
-    <section>
+    <section class="mb-6">
       <card card-class-name="new" card-title="新品上市" :card-data="latestProducts" :carts="carts"></card>
       <card card-class-name="hot" card-title="熱銷商品" :card-data="hotProduct" :carts="carts"></card>
     </section>
