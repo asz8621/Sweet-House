@@ -122,7 +122,7 @@
         </div>
       </div>
 
-      <card card-class-name="similar" card-title="類似商品" :card-data="otherProducts" :carts="carts"></card>
+      <card card-class-name="similar" card-title="類似商品" :card-data="otherProducts" :carts="carts" @jumpProductEmit="jumpProduct"></card>
 
     </div>
   </div>
@@ -159,39 +159,42 @@ export default {
   },
 
   methods: {
-    getOtherProducts() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
-      this.$http.get(api)
-        .then((res) => {
-          res.data.data.forEach((item) => {
-            if (item.category === this.category && item.id !== this.product.id) { this.otherProducts.push(item); }
-          });
-        })
-        .catch(() => {
-          this.$toast.error('資料讀取異常，請洽客服人員', { icon: 'fas fa-times' });
-        });
-    },
-    getProduct(switchid) { // 讀取所有商品資料
+    getProduct() { // 讀取所有商品資料
       this.$store.dispatch('updateLoading', true);
-      this.otherProducts.length = 0;
-      if (switchid) {
-        const path = `/products/${switchid}`;
-        if (this.$route.path !== path) this.$router.push(path);
-        this.$router.push(`/product/${switchid}`);
-      }
       const { id } = this.$route.params;
-      this.getOtherProducts();
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`;
       this.$http.get(api)
         .then((res) => {
           this.product = res.data.data;
           this.category = this.product.category;
+          this.getOtherProducts();
           this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
           this.$store.dispatch('updateLoading', false);
           this.$toast.error('資料讀取異常，請洽客服人員', { icon: 'fas fa-times' });
         });
+    },
+    getOtherProducts() {
+      this.$store.dispatch('updateLoading', true);
+      this.otherProducts = [];
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
+      this.$http.get(api)
+        .then((res) => {
+          this.otherProducts = res.data.data.filter((item) => item.category === this.category && item.id !== this.product.id);
+          this.$store.dispatch('updateLoading', false);
+        })
+        .catch(() => {
+          this.$toast.error('資料讀取異常，請洽客服人員', { icon: 'fas fa-times' });
+          this.$store.dispatch('updateLoading', false);
+        });
+    },
+    jumpProduct(switchid) {
+      if (switchid) {
+        this.$router.push(`/product/${switchid}`); // 有 id 直接轉挑
+        this.getProduct();
+        this.getOtherProducts();
+      }
     },
     verifyQuantity() { // 驗證數量
       const IntegerRule = /^[1-9]+[0-9]*]*$/; // 整數規則

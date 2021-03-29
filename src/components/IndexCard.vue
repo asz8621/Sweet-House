@@ -12,8 +12,8 @@
           <swiper class="swiper" :options="cardClassName !== 'similar' ? indexSwiperOption : similarSwiperOption" v-if="cardData.length">
             <swiper-slide v-for="item in cardData" :key="`${item.id}${cardClassName}`">
               <div class="swiper-card-body">
-                <div class="card-img cursor-pointer" @click="$router.push(`/product/${item.id}`)">
-                    <img :src="item.imageUrl[0]" alt="" class="img-fluid" />
+                <div class="card-img cursor-pointer" @click="getProduct(item.id, cardClassName)">
+                  <img :src="item.imageUrl[0]" alt="" class="img-fluid" />
                 </div>
                 <h4 class="swiper-card-title">{{item.title}}</h4>
                 <div class="swiper-card-price">
@@ -122,6 +122,13 @@ export default {
         this.$toast.error(`${errors.response.data.errors}`, { icon: 'fas fa-times' });
         this.status.btnLoading = '';
       });
+    },
+    getProduct(switchid, cardClassName) {
+      if (cardClassName === 'similar') { // 如果是在產品頁點選就 emit
+        this.$emit('jumpProductEmit', switchid);
+      } else {
+        this.$router.push(`/product/${switchid}`);
+      }
     },
   },
 };
