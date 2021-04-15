@@ -1,6 +1,8 @@
 <template>
     <div class="container mb-5">
-      <VueLoading loading :active.sync="isLoading"></VueLoading>
+      <VueLoading loading :active.sync="isLoading">
+        <loading></loading>
+      </VueLoading>
       <div class="text-right mt-5">
         <button class="btn btn-main" @click="openModal('new')">
           建立新的折價卷
@@ -65,12 +67,14 @@ import $ from 'jquery';
 import CouponsModal from '../../components/modal/CouponsModal.vue';
 import DelCouponsModal from '../../components/modal/DelCouponsModal.vue';
 import Pagination from '../../components/Pagination.vue';
+import loading from '../../components/backendLoading.vue';
 
 export default {
   components: {
     CouponsModal,
     DelCouponsModal,
     Pagination,
+    loading,
   },
   data() {
     return {

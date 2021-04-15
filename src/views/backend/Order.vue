@@ -1,6 +1,8 @@
 <template>
   <div class="container mb-5">
-    <VueLoading loading :active.sync="isLoading"></VueLoading>
+    <VueLoading loading :active.sync="isLoading">
+      <loading></loading>
+    </VueLoading>
     <table class="table mt-5 text-center">
       <thead>
         <tr>
@@ -63,11 +65,13 @@
 
 import OrderModal from '../../components/modal/OrderModal.vue';
 import Pagination from '../../components/Pagination.vue';
+import loading from '../../components/backendLoading.vue';
 
 export default {
   components: {
     OrderModal,
     Pagination,
+    loading,
   },
   data() {
     return {

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <VueLoading loading :active.sync="isLoading"></VueLoading>
+    <VueLoading loading :active.sync="isLoading">
+      <loading></loading>
+    </VueLoading>
     <div id="productModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content border-0">
@@ -101,9 +103,13 @@
 
 <script>
 import $ from 'jquery';
+import loading from '../backendLoading.vue';
 
 export default {
   props: ['isNew'],
+  components: {
+    loading,
+  },
   data() {
     return {
       tempProduct: {

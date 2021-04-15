@@ -6,4 +6,5 @@
 </template>
 
 <style lang="scss">
+@import '@/assets/helpers/frontend/_loading.scss';
 </style>

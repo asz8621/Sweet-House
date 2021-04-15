@@ -1,6 +1,8 @@
 <template>
     <div class="container mb-5">
-      <VueLoading loading :active.sync="isLoading"></VueLoading>
+      <VueLoading loading :active.sync="isLoading">
+        <loading></loading>
+      </VueLoading>
       <div class="text-right mt-5">
         <button class="btn btn-main" @click="openModal('new')">
           建立新的產品
@@ -67,12 +69,14 @@ import $ from 'jquery';
 import ProductModal from '../../components/modal/ProductModal.vue';
 import DelProductModal from '../../components/modal/DelProductModal.vue';
 import Pagination from '../../components/Pagination.vue';
+import loading from '../../components/backendLoading.vue';
 
 export default {
   components: {
     ProductModal,
     DelProductModal,
     Pagination,
+    loading,
   },
   data() {
     return {

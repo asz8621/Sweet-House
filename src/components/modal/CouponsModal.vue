@@ -1,6 +1,8 @@
 <template>
   <div>
-    <VueLoading loading :active.sync="isLoading"></VueLoading>
+    <VueLoading loading :active.sync="isLoading">
+      <loading></loading>
+    </VueLoading>
     <div id="couponModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content border-0">
@@ -56,9 +58,13 @@
 
 <script>
 import $ from 'jquery';
+import loading from '../backendLoading.vue';
 
 export default {
   props: ['isNew'],
+  components: {
+    loading,
+  },
   data() {
     return {
       tempCoupon: {},
@@ -68,7 +74,6 @@ export default {
     };
   },
   methods: {
-
     getCoupon(id, type) {
       this.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/coupon/${id}`;
