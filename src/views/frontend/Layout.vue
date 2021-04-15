@@ -17,19 +17,14 @@
         </router-link>
         <ul class="link-top">
           <li>
-            <a href="javascript:;"
-            class="text-main p-3"
-            @click.prevent="isSearch">
+            <a href="javascript:;" class="text-main p-3" @click.prevent="isSearch">
               <i class="fas fa-search"></i>
             </a>
-            <div id="search" class="search cursor-pointer" :class="{ 'opened': search }">
-              <input
-                type="text"
-                class="search-text"
-                placeholder="請輸入產品名稱"
-              />
-              <button class="btn btn-primary">搜尋</button>
-              <i class="search-close fas fa-times" @click.prevent="isSearch"></i>
+            <div id="search" class="search" :class="{ 'opened': search }">
+              <input type="text" class="search-text" placeholder="請輸入產品名稱"
+              v-model.trim="searchName" ref="searchInput" @keyup.enter="searchProduct(searchName)" />
+              <button class="btn btn-main" @click="searchProduct(searchName)">搜尋</button>
+              <i class="search-close cursor-pointer fas fa-times" @click.prevent="isSearch"></i>
             </div>
           </li>
           <li v-if="this.$route.path !== '/checkout'">
@@ -64,6 +59,7 @@
         </div>
       </nav>
     </header>
+
     <router-view :carts="carts"></router-view>
 
     <footer v-if="this.$route.path !== '/checkout'"
@@ -125,7 +121,6 @@
 </template>
 
 <script>
-import $ from 'jquery';
 import loading from '../../components/Loading.vue';
 import CartModal from '../../components/modal/CartModal.vue';
 
@@ -141,8 +136,8 @@ export default {
         openMenuDown: false,
         bodyFreeze: false,
       },
+      searchName: '',
       url: '',
-      asdwww: false,
       search: false,
       window: {
         width: 0,
@@ -173,7 +168,20 @@ export default {
     window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('scroll', this.handleScroll);
   },
+  watch: {
+    $route(to, from) {
+      if (to.path !== from.path && this.search) {
+        this.search = false;
+      }
+    },
+  },
   methods: {
+    searchProduct(searchName) { // 搜尋
+      if (!this.searchName) return; // 沒輸入不動作
+      this.searchName = '';
+      this.search = false;
+      this.$router.push(`/search/q=${searchName}`);
+    },
     getCart(status) { // 抓購物車資料
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
       this.$http.get(api).then((res) => {
@@ -213,6 +221,9 @@ export default {
     },
     isSearch() { // 搜尋切換
       this.search = !this.search;
+      setTimeout(() => {
+        this.$refs.searchInput.focus();
+      }, 1);
     },
     handleResize() { // 視窗偵測
       const { width } = this.window;
@@ -230,9 +241,6 @@ export default {
       } else {
         this.logoMaxHeight = true;
       }
-    },
-    openCart() {
-      $('#cartModal').modal('show');
     },
   },
 };

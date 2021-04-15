@@ -32,6 +32,15 @@ const routes = [
         component: () => import('../views/frontend/index.vue'),
       },
       {
+        path: 'search/q=:searchName',
+        name: 'search',
+        meta: {
+          title: '搜尋｜Sweet House',
+        },
+        component: () => import('../views/frontend/Search.vue'),
+        props: { default: true, sidebar: false },
+      },
+      {
         path: 'about',
         name: '關於弄甜屋',
         meta: {

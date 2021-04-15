@@ -82,10 +82,10 @@
         transition: all 1s;
       .process-no-round{
         color: #fff;
-        background: #867162;
+        background: $main;
       }
       &::after{
-        background: #867162;
+        background: $main;
       }
     }
     .process-no-round{
@@ -110,7 +110,7 @@
 }
 .order-title{
   color: #fff;
-  background: #867162;
+  background: $main;
   border-bottom: 1px solid #c7c7c7;
   border-radius: 5px 5px 0 0;
   .order-title-num{
@@ -182,12 +182,12 @@
     width: 60%;
     border-radius: 0;
     border: 0;
-    border-top: 1px solid #867162;
-    border-bottom: 1px solid #867162;
+    border-top: 1px solid $main;
+    border-bottom: 1px solid $main;
     font-weight: 900;
   }
   .operating-less{
-    background: #867162;
+    background: $main;
     color: #fff;
     padding: 1px 6px;
     border: none;
@@ -198,7 +198,7 @@
     }
   }
   .operating-plus{
-    background: #867162;
+    background: $main;
     color: #fff;
     padding: 1px 6px;
     border: none;

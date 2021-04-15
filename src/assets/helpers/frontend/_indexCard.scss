@@ -49,7 +49,7 @@
   top: 50%;
   transform: translate(0, -50%);
   font-size: 2rem;
-  color: #867162;
+  color: $main;
   z-index: 100;
 }
 .slideControls .slideNext {
@@ -58,7 +58,7 @@
   top: 50%;
   transform: translate(0, -50%);
   font-size: 2rem;
-  color: #867162;
+  color: $main;
   z-index: 100;
 }
 @media (min-width: 414px) {
@@ -80,12 +80,12 @@
     .swiper-button-prev{
       display: flex;
       left: -35px;
-      color: #867162;
+      color: $main;
     }
     .swiper-button-next{
       display: flex;
       right: -35px;
-      color: #867162;
+      color: $main;
     }
   }
 }

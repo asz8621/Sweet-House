@@ -23,15 +23,10 @@
             <div class="product-content-text">
               <h2 class="title my-3">{{item.title}}</h2>
 
-              <!-- 有特價 -->
-              <div class="price mb-3 text-right" v-if="item.origin_price !== item.price">
-                <div class="original mb-1">NT$ {{item.origin_price | thousands}}</div>
+              <!-- 價錢 -->
+              <div class="price mb-3 text-right">
+                <div class="original mb-1" v-if="item.origin_price !== item.price">NT$ {{item.origin_price | thousands}}</div>
                 <div class="onSale mb-3">NT$ {{item.price | thousands}}</div>
-              </div>
-
-              <!-- 沒有特價 -->
-              <div class="price mb-3 text-right" v-else>
-                <div class="onSale mb-1">NT$ {{item.origin_price | thousands}}</div>
               </div>
 
             </div>

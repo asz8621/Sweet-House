@@ -50,6 +50,7 @@ input[type="number"]{-moz-appearance:textfield;}
 .spinner-border{
   display: inherit;
   // vertical-align: inherit;
+  vertical-align: baseline;
 }
 .large-size{
   font-weight: 900;

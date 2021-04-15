@@ -77,6 +77,13 @@ configure({
 Vue.prototype.$bus = new Vue();
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+
+Vue.directive('focus', {
+  inserted(el) {
+    el.focus();
+  },
+});
+
 new Vue({
   router,
   store,
