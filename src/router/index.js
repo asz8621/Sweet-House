@@ -86,6 +86,9 @@ const routes = [
   {
     path: '/admin/login',
     name: 'Login',
+    meta: {
+      title: '弄甜屋-後台登入｜Sweet House',
+    },
     component: () => import('../views/backend/Login.vue'),
   },
   {
@@ -96,21 +99,33 @@ const routes = [
       {
         path: 'index',
         name: 'Index',
+        meta: {
+          title: '弄甜屋-後台首頁｜Sweet House',
+        },
         component: () => import('../views/backend/index.vue'),
       },
       {
         path: 'products',
         name: 'Products',
+        meta: {
+          title: '弄甜屋-產品管理｜Sweet House',
+        },
         component: () => import('../views/backend/Products.vue'),
       },
       {
         path: 'order',
         name: 'Order',
+        meta: {
+          title: '弄甜屋-訂單管理｜Sweet House',
+        },
         component: () => import('../views/backend/Order.vue'),
       },
       {
         path: 'coupons',
         name: 'Coupons',
+        meta: {
+          title: '弄甜屋-優惠卷管理｜Sweet House',
+        },
         component: () => import('../views/backend/Coupons.vue'),
       },
     ],
