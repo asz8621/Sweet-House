@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
               <label for="title">折扣價錢</label>
-              <input id="title" v-model="tempCoupon.percent" type="text"
+              <input id="title" v-model.number="tempCoupon.percent" @change="verifyQuantity()" type="text"
               class="form-control" placeholder="請輸入標題" required>
             </div>
             <div class="form-group">
@@ -40,7 +40,12 @@
               <label for="deadlineTime">到期時間</label>
               <input type="time" class="form-control" id="deadlineTime" step="1" v-model="deadlineTime" placeholder="請輸入到期時間">
             </div>
-
+            <div class="form-group">
+              <div class="form-check">
+                <input id="enabled" v-model="tempCoupon.enabled" class="form-check-input" type="checkbox">
+                <label class="form-check-label" for="enabled">是否啟用</label>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
@@ -82,11 +87,13 @@ export default {
           this.tempCoupon = {
             title: '',
             code: '',
-            percent: 100,
+            percent: 0,
             enabled: false,
-            deadline_at: '',
           };
+          this.deadlineDate = '';
+          this.deadlineTime = '';
           this.isLoading = false;
+          $('#couponModal').modal('show');
           break;
         default:
           this.$http.get(api).then((res) => {
@@ -130,6 +137,12 @@ export default {
           text: '資料讀取異常，請洽資訊人員',
         });
       });
+    },
+    verifyQuantity() { // 驗證數字
+      const IntegerRule = /^[1-9]+[0-9]*]*$/; // 整數規則
+      if (this.tempCoupon.percent < 1 || !IntegerRule.test(this.tempCoupon.percent)) {
+        this.tempCoupon.percent = 0;
+      }
     },
   },
 };

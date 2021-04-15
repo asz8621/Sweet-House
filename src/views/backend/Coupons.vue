@@ -118,11 +118,8 @@ export default {
         case 'new':
           // 切換狀態為 true 代表新增
           this.isNew = true;
-          // 新增之前必須先清除原有可能暫存的資料
-          // this.$refs.couponsModal.tempCoupons = {};
           // 切換完畢並清空資料後開啟 Modal
           this.$refs.couponsModal.getCoupon(this.tempCoupons, isNew);
-          $('#couponsModal').modal('show');
           break;
         case 'edit':
           this.isLoading = false;
